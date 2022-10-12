@@ -1,0 +1,104 @@
+.moviesCard__content{
+    width: 100%;
+    height: 319px;
+    padding: 0;
+    background-color: #FDFDFD;
+}
+.moviesCard__content:nth-child(3n){
+    margin-left: 4px;
+}
+.moviesCard__text{
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 54px;
+    color: #000000;
+    width: 74.1%;
+    margin: 0;
+}
+.moviesCard__text_min{
+    font-size: 13px;
+    color: #A0A0A0;
+    font-weight: 400;
+    width: 21.6%;
+    text-align: end;
+}
+.moviesCard__texts{
+    width: 90%;
+    display: flex;
+    flex-direction: row;
+    gap: 14px;
+    margin: 0 auto 0 auto;
+    height: 54px;
+}
+.moviesCard__button{
+    background: #F9F9F9;
+    border-radius: 30px;
+    width: 100px;
+    height: 29px;
+    border: none;
+    margin: 14px 36.1% 18px 36.1%;
+    padding: 0;
+    cursor: pointer;
+    transition: opacity 0.5s ease-in-out;
+}
+.moviesCard__button_active{
+    width: 100px;
+    height: 30px;
+}    
+.moviesCard__button_text{
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 11px;
+    display: none;
+}
+.moviesCard__button:hover{
+    opacity: 0.8;
+}
+.moviesCard__image{
+    width: 100%;
+    height: 62.7%;
+}
+@media (max-width: 1100px){
+    .moviesCard__content{
+        height: 309px;
+    }
+}
+@media (max-width: 768px){
+    .moviesCard__button{
+        margin: 13px 34.7% 18px 34.7%;
+    }
+    
+}
+@media (max-width: 320px){
+    .moviesCard__image{
+        width: 100%;
+        height: 62%;
+    }
+    .moviesCard__text{
+        font-size: 12px;
+        line-height: 46px;
+    }
+    .moviesCard__text_min{
+        font-size: 10px;
+    }
+    .moviesCard__texts{
+        width: 90.67%;
+        height: 46px;
+    }
+    .moviesCard__button{
+        margin: 10px 33.3% 18px 33.3%;
+    }
+    .moviesCard__content{
+        height: 271px;
+        margin-top: 16px;
+    }
+    .moviesCard__content:nth-child(3n){
+        margin-top: 14px;
+        margin-left: 0;
+    }
+    .moviesCard__content:first-child{
+        margin-top: 0;
+    }
+    
+}
