@@ -3,6 +3,7 @@
     height: 319px;
     padding: 0;
     background-color: #FDFDFD;
+    box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.08);
 }
 .moviesCard__content:nth-child(3n){
     margin-left: 4px;

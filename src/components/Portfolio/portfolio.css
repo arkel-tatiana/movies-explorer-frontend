@@ -29,7 +29,13 @@
     text-align: left;
     color: #000000;
     letter-spacing: -0.04em;
+    margin: 0;
+}
+.portfolio__list-link{
     text-decoration: none;
+    display: flex;
+    justify-content: space-between ;
+    width: 100%;
 }
 .portfolio__list-content{
     display: flex;
@@ -61,16 +67,24 @@
         font-size: 28px;
         line-height: 50px; 
     }
+    .portfolio__list-link{
+        font-size: 28px;
+        line-height: 50px; 
+    }
     .portfolio__list{
         padding-bottom: 90px;
     }
 
 }
-@media (max-width: 320px){
+@media (max-width: 500px){
     .portfolio{
         width: 91.25%;
     }
     .portfolio__list-text{
+        font-size: 18px;
+        line-height: 28px; 
+    }
+    .portfolio__list-link{
         font-size: 18px;
         line-height: 28px; 
     }

@@ -20,7 +20,8 @@
 .moviesCardList__button_dop{
     background: #F9F9F9;
     border-radius: 6px;
-    width: 320px;
+    width: 25%;
+    max-width: 320px;
     height: 36px;
     border: none;
     margin: 50px 37.5% 80px 37.5%;
@@ -57,13 +58,13 @@
         line-height: 14px;
     }
 }
-@media (max-width: 500px){
+
+@media (max-width: 600px){
     .moviesCardList__container{
         display: flex;
         flex-direction: column;
         width: 93.75%;
         gap: 0;
-        
     }
     .moviesCardList__button_dop{
         width: 200px;
