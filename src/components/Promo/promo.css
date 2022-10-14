@@ -1,0 +1,115 @@
+.promo {
+    margin-top: 0;
+    width: 100%;
+    max-width: 1280px;
+    background-color: #F3C1F8;
+}
+.promo__container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.promo__content{
+    display: flex;
+    flex-direction: column;
+    margin: 75px 0 0 70px;
+}
+.promo__title{
+    margin: 0;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 50px;
+    line-height: 58px;
+    color: #000000;
+    max-width: 77.1%;
+}
+.promo__text{
+    margin-top: 36px;
+    margin-bottom: 0;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 16px;
+    color: #000000;
+    mix-blend-mode: normal;
+    opacity: 0.5;
+    max-width: 37.35%;
+}
+.promo__link{
+    margin-top: 146px;
+    margin-bottom: 75px;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 36px;
+    color: #000000;
+    border: 1px solid rgba(0, 0, 0, 0.6);
+    border-radius: 3px;
+    width: 129px;
+    height: 36px;
+    background-color: #F3C1F8;
+    text-decoration: none;
+    text-align: center;
+    box-sizing: border-box;
+    cursor: pointer;
+    transition: opacity 0.5s ease-in-out;
+}
+.promo__link:hover{
+    opacity: 0.7;
+}
+.promo__logo{
+    margin: 75px 70px 0 0;
+    width: 310px;
+    height: 304px;
+}
+@media (max-width: 768px){
+    .promo__container{
+        display: flex;
+        flex-direction: column-reverse;
+        align-items: center;
+    }
+    .promo__logo{
+        margin: 140px 0 0 0;
+    }
+    .promo__content{
+        margin: 48px 0 0 0;
+        align-items: center; 
+    }
+    .promo__title{
+        text-align: center;
+        font-size: 40px;
+        line-height: 50px;
+    }
+    .promo__text{
+        max-width: 33.85%;
+        margin-top: 22px;
+        text-align: center;
+    }
+    .promo__link{
+        margin-top: 92px;
+    }
+}
+@media (max-width: 320px){
+    .promo__logo{
+        margin: 70px 0 0 0;
+        width: 210px;
+        height: 206px;
+    }
+    .promo__title{
+        font-size: 30px;
+        line-height: 38px;
+        max-width: 93.75%;
+        letter-spacing: -0.04em;
+    }
+    .promo__text{
+        margin-top: 24px;
+        max-width: 81.25%;
+    }
+    .promo__link{
+        margin-top: 80px;
+        margin-bottom: 30px;
+    }
+    .promo__content{
+        margin-top: 44px;
+    }
+}

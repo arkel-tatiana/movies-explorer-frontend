@@ -1,0 +1,182 @@
+.register__forma{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #FFFFFF;
+    padding-bottom: 70px;
+    box-sizing: border-box;
+    color:#000000 
+}
+.register__title{
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 29px;
+    margin: 0 auto 20px auto;
+    text-align: start;
+    width: 30.94%;  
+}
+.register__inputs{
+    background-color: #F9F9F9;
+    border-radius: 8px;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 16px;
+    width: 30.94%;
+    height: 46px;
+    border:none;
+    margin-top: 0;
+    padding-left: 15px;
+    box-sizing: border-box;
+}
+.register__text_errorEmail{
+    position: absolute;
+    top:370px;
+    left: 36%
+}
+.register__text_errorPassword{
+    position: absolute;
+    top:450px;
+    left: 36%
+}
+.register__text_errorName{
+    position: absolute;
+    top:280px;
+    left: 36%
+}
+.register__text_visible{
+    display: none;
+}
+
+.register__text{
+    width: 30.94%;
+    text-align: start;
+    font-weight: 400;
+    font-size: 10px;
+    line-height: 12px;
+    color: #A0A0A0;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+.register__text_error{
+    color: #FF4062;
+    width: 30.94%;
+    margin-top: 10px;
+    margin-bottom: 0;
+}
+.register__text_size{
+    font-size: 14px;
+    line-height: 17px;
+    text-align: center;
+    margin: 0 auto 0 auto; 
+}
+.register__text_link{
+    color: #000000;
+    margin-left: 6px;
+    text-decoration: none;
+}
+.register__submit-button{
+    width: 30.94%;
+    margin: 69px auto 16px auto;
+    height: 45px;
+    background: #000000;
+    border-radius: 3px;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    text-align: center;
+    color: #FFFFFF;
+    padding: 0;
+    border: none;
+}
+.register__submit-button_disabled{
+    background: #F8F8F8;
+    color: #C2C2C2;
+}
+.register__inputs_email{
+    font-weight: 500;
+}
+.register__inputs_color{
+    color:#FF4062
+}
+.register__text_loginPassword{
+    top: 380px;
+}
+.register__text_loginEmail{
+    top: 280px;
+}
+@media (max-width: 768px){
+    .register__title, .register__inputs {
+        width: 51.56%;
+    }
+    .register__text{
+        width: 51.56%;
+        margin-bottom: 9px;
+    }
+    .register__text_error{
+        width: 51.56%;
+        margin-top: 13px;
+    }
+    .register__submit-button{
+        margin-top: 59px;
+        width: 51.56%;
+    }
+    .register__text_errorEmail{
+        top:530px;
+        left: 28.5%
+    }
+    .register__text_errorPassword{
+        top:611px;
+        left: 28.5%
+    }
+    .register__text_errorName{
+        top:440px;
+        left: 28.5%;
+    }
+    .register__text_loginPassword{
+        top: 530px;
+    }
+    .register__text_loginEmail{
+        top: 440px;
+    }
+}
+@media (max-width: 320px){
+    .register__title{
+        width: 81.25%;
+        text-align: center;
+        margin-bottom: 60px;
+    }
+    .register__inputs {
+        width: 81.25%;
+    }
+    .register__text{
+        width: 81.25%;
+        margin-bottom: 10px;
+    }
+    .register__text_error{
+        width: 81.25%;
+        margin-top: 9px;
+    }
+    .register__submit-button{
+        margin-top: 148px;
+        width: 81.25%;
+        font-size: 12px;
+        line-height: 15px;
+        margin-bottom: 14px;
+    }
+    .register__text_errorEmail{
+        top:408px;
+        left: 28.5%
+    }
+    .register__text_errorPassword{
+        top:488px;
+        left: 28.5%
+    }
+    .register__text_errorName{
+        top:320px;
+        left: 28.5%;
+    }
+    .register__text_size {
+        font-size: 12px;
+        line-height: 15px;
+    }
+}

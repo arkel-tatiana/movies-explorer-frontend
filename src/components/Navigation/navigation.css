@@ -1,0 +1,198 @@
+.navigation {
+    margin: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-right: 70px;
+}
+.navigation_overley{
+    position: fixed;
+    color: #000000;
+    background: rgba(0, 0, 0, 0.3);
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    justify-content: center;
+    align-items: start;
+    z-index: 100;
+    opacity: 1;
+    transition: visibility 0.5s, opacity 0.5s;
+}
+.navigation__container{
+    display: flex;
+    list-style-type: none;
+    width: 380px;
+}
+.navigation__container_menu {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    min-height: 1024px;
+    width: 67.7%;
+    max-width: 520px;
+    margin: 0 0 0 auto;
+    padding: 0;
+    background-color: #FFFFFF;
+    padding-top: 141px;
+}
+.navigation__link {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 16px;
+    text-align: center;
+    border: none;
+    padding: 0;
+    color: #000000;
+    text-decoration: none;
+}
+.navigation__link:active:focus{
+    font-weight: 400;
+}
+.navigation__link_cursor{
+    cursor: pointer;
+    transition: opacity 0.5s ease-in-out;
+}
+.navigation__link_cursor:hover{
+    opacity: 0.7;
+}
+.navigation__link_menu{
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 22px;
+    text-align: center;
+    color: #000000;
+    display: block;
+    margin-top: 18px;
+    border: none;
+    padding: 0;
+    padding-bottom: 4px;
+    text-decoration: none;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    z-index: 1000;
+}
+.navigation__listLink{
+    text-decoration: none;
+}
+.navigation__link_menu:focus:active{
+    border-bottom: 2px solid #000000;
+}
+
+.navigation__listLink_menu:nth-of-type(2){
+    margin-top: 6px;
+    margin-bottom: 6px;
+}
+
+.navigation__button{
+    width: 30px;
+    height: 30px;
+    border: none;
+    background: none;
+    position: absolute;
+    top: 22.44px;
+    right: 22.44px;
+    z-index: 200;
+}
+.navigation__button_hidden {
+    display: none;
+}
+.navigation__link_film{
+    font-size: 14px;
+    line-height: 18px;
+    width: 58px;
+    text-align: start;
+    margin-right: 22px;
+}
+.navigation__link_profile{
+    width: 100px;
+    font-size: 14px;
+    line-height: 16px;
+    margin-left: 30px;
+    padding: 8px 20px 8px 20px;
+    background: #F9F9F9;
+    border-radius: 20px;
+}
+.navigation__link_in {
+    width: 76px;
+    height: 32px;
+    margin-left: 30px;
+    background-color: #000000;
+    border-radius: 3px;
+    color: #FFFFFF;
+    box-sizing:border-box;
+    padding: 8px 21px 8px 20px;
+}
+.navigation__logo{
+    display: none;
+    width: 44px;
+    height: 44px;
+    margin-right: 30px;
+}
+.navigation__link_last{
+    margin-top: 625px;
+    font-size: 14px;
+    line-height: 16px;
+}
+.navigation__link_hidden{
+    display: none;
+}
+@media (max-width: 768px){
+    .navigation__link_profile,  .navigation__link_film{
+        display: none;
+    }
+    .navigation__logo{
+        display: block;
+    }
+    .navigation {
+        margin-right: 0;
+        width: calc(100% - 38px - 30px);
+    }
+    .navigation__link_in{
+        margin-right: 30px;
+    }
+}
+@media (max-width: 320px){
+    .navigation__link_in{
+        width: 54px;
+        height: 26px;
+        margin-left: 14px;
+        margin-right: 14px;
+        padding: 5px 12px 5px 12px;
+    }
+    .navigation__link {
+        font-size: 10px;
+    }
+    .navigation__logo{
+        width: 40px;
+        height: 43px;
+        margin-right: 14px;
+    }
+    .navigation__container_menu {
+        min-height: 780px;
+        width: 100%;
+        max-width: 320px;
+        padding-top: 135px;
+    }
+    .navigation__link_menu {
+        margin-top: 10px;
+        padding-bottom: 7px;
+    }
+    .navigation__listLink_menu:nth-of-type(2){
+        margin-top: 5px;
+    }
+    .navigation__link_last{
+        margin-top: 446px;
+    }
+    .navigation__button{
+        width: 30px;
+        height: 30px;
+        background-size: 30px 30px;
+        top: 13.44px;
+        right: 13.44px;
+    }
+}
