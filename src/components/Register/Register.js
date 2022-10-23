@@ -9,14 +9,29 @@ const Register = ({ onRegister }) => {
         handleChange,
         errors,
         isValid,
-        handleSubmit
+        resetForm
     } = useForm(register, validate, "rg");
     
     function register() {
         console.log('No errors, submit callback called!');
     }
-    console.log(errors)
-    console.log(isValid)
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        if (isValid) {
+            onRegister({ name: values.name, email: values.email, password: values.password })
+            resetForm()
+        };
+    }
+   // const handleSubmit = useCallback(
+   //     (newValues = {}, newErrors = {}, newIsValid = false) => {
+   //       setValues(newValues);
+   //       setErrors(newErrors);
+   //       setIsValid(newIsValid);
+   //     },
+   //     [setValues, setErrors, setIsValid]
+   //   );
+
     return (
         <section className="register">
             <form className="register__forma" onSubmit={handleSubmit} noValidate>

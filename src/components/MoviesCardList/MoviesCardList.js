@@ -1,43 +1,39 @@
 import './moviesCardList.css';
+import React from 'react';
 import MoviesCard from '../MoviesCard/MoviesCard';
-import React, { useState, useEffect } from 'react'
 import { Route, Switch} from 'react-router-dom';
 
-function MoviesCardList({cards, logoButton}) {
-    
-  let kolCards = 12;
-  let dopCards =3;
-  if (window.screen.width <= 768 && window.screen.width > 320) {
-    kolCards = 8;
-    dopCards = 2;
-  } else if (window.screen.width <= 320) {
-    kolCards = 5;
-    dopCards = 5;
-  } 
-  
-  let start = kolCards
-  let newCards=cards.slice(0, kolCards)
-  
-  function hangleAddFilm(){
-    let stop=0
-    start+dopCards < cards.length ? stop=start+dopCards : stop=cards.length
-    newCards.push(...cards.slice(start, stop));
-    start=start+dopCards
-  }
-  return (
+function MoviesCardList({showMovies, logoButton, onHandleMovie, moviesMain, onAddFilm, foundMovies, disambledButton}) {
+    function hangleAddFilm(){
+        onAddFilm(foundMovies)
+    }
+    console.log(disambledButton)
+    console.log(showMovies)
+    return (
         <section className="moviesCardList">
           <ul className="moviesCardList__container">
-            {newCards.map((item, i) => (
-          <MoviesCard card={item} logoButton={logoButton} key={i}/>
-      ))}
-    </ul>
-    <Switch>
-        <Route path="/movies">
-          <button className="moviesCardList__button_dop" type="button" aria-label="Добавить фильмы" onClick={hangleAddFilm} >Ещё</button>
-        </Route>  
-    </Switch>
-  </section>
+              {showMovies.map((item, i) => (
+                <MoviesCard
+                    movie={item}
+                    logoButton={logoButton}
+                    onHandleMovie={onHandleMovie}
+                    moviesMain={moviesMain}
+                    key={i}/>
+              ))}
+          </ul>
+        <Switch>
+            <Route path="/movies">
+                <button
+                    className={`${!disambledButton && showMovies.length > 3? 'moviesCardList__button_dop' : 'moviesCardList__button_visible'}`}
+                    type="button" aria-label="Добавить фильмы" 
+                    onClick={hangleAddFilm}
+                    disabled={disambledButton}>Ещё</button>
+            </Route>  
+        </Switch>
+        </section>
   );
 }
 
 export default MoviesCardList;
+
+

@@ -5,16 +5,18 @@ import card1 from '../../images/card1.svg';
 import card2 from '../../images/card2.svg';
 import card3 from '../../images/card3.svg';
 import logoDeleteMovie from '../../images/logoDeleteMovie.svg';
-const cards = [];
-cards.push(card1,card2,card3);
 
-function SavedMovies() {
-  return (
+
+
+function SavedMovies({loggedIn, onSaveFoundMovies, foundMoviesMain, onDeleteMovie, moviesMain, onSaveChengeCheckbox, checked}) {
+  console.log(onSaveFoundMovies)
+    return (
         <div className="savedMovies">
-            <SeachForm />
-            <MoviesCardList cards={cards} logoButton={logoDeleteMovie} />
+            <SeachForm onFoundMovies={onSaveFoundMovies} onChengeCheckbox={onSaveChengeCheckbox} checked={checked} />
+            <MoviesCardList showMovies={foundMoviesMain} logoButton={logoDeleteMovie}
+                onHandleMovie={onDeleteMovie} moviesMain={moviesMain}/>
         </div>
     );
-  }
+}
 
 export default SavedMovies;

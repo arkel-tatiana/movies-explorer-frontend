@@ -11,12 +11,19 @@ const Login = ({ onLogin, errorLogin, error }) => {
         handleChange,
         errors,
         isValid,
-        handleSubmit
+        resetForm
     } = useForm(login, validate, "lg");
-    
-    
+        
     function login() {
         console.log('No errors, submit callback called!');
+    }
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        if (isValid) {
+            onLogin({ email: values.email, password: values.password })
+            resetForm()
+        };
     }
      
     return (
@@ -30,7 +37,7 @@ const Login = ({ onLogin, errorLogin, error }) => {
                     type="email"
                     value={values.email || ''}
                     onChange={handleChange}
-                    required />
+                    required/>
                 <span className={`${errors.email ? 'login__text login__text_error login__text_errorEmail' : 'login__text_visible'}`}>{errors.email}</span>    
                 <label htmlFor="user-password" className="login__text">Пароль</label>                
                 <input className="login__inputs login__inputs_color"
@@ -52,4 +59,5 @@ const Login = ({ onLogin, errorLogin, error }) => {
     );
 }
 export default Login;
+
 
