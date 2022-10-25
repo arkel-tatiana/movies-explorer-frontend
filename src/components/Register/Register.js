@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 import './register.css'
 import useForm from "../../utils/UseForm";
 import validate from '../../utils/LoginFormValidationRules';
-const Register = ({ onRegister, errorRegister }) => {
+const Register = ({ onRegister, errorRegister, errorMessage }) => {
     const {
         values, 
         handleChange,
@@ -55,7 +55,8 @@ const Register = ({ onRegister, errorRegister }) => {
                 onChange={handleChange} 
                 required />
             <span className={`${errors.password ? 'register__text register__text_error register__text_errorPassword' : 'register__text_visible'}`}>{errors.password}</span>    
-            <p className={`${errorRegister ? 'register__text register__text_error' : 'register__text_visible'}`} >Что-то пошло не так...</p>        
+            <p className={`${errorRegister ? 'register__text register__text_error' : 'register__text_visible'}`} >Что-то пошло не так...</p>
+            <span className={`${errorMessage ? 'register__error' : 'register__text_visible'}`} >{errorMessage}</span>        
             <button className={`${isValid ? 'register__submit-button' : 'register__submit-button register__submit-button_disabled'}`}
                 disabled={!isValid}
                 type="submit">Зарегистрироваться</button>

@@ -4,7 +4,7 @@ import validate from '../../utils/LoginFormValidationRules';
 import React, { useState } from 'react'
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
-function Profile({loggedIn, onUpdateUser, onSignOut}) {
+function Profile({loggedIn, onUpdateUser, onSignOut, errorMessage}) {
     const {
         values,
         setValues, 
@@ -68,7 +68,8 @@ function Profile({loggedIn, onUpdateUser, onSignOut}) {
                         required>
                     </input>   
                 </div>
-                <span className={`${errors.email ? 'profile__text_error profile__text_errorEmail' : 'profile__text_visible'}`}>{errors.email}</span>
+                <span className={`${errors.email ? 'profile__text_error profile__text_errorEmail' : ''}`}>{errors.email}</span>
+                <span className={`${errorMessage ? 'profile__error' : 'profile__text_visible'}`} >{errorMessage}</span>
                 <button className={`${isDisabled ? 'profile__button' : 'profile__button_hidden'}`} type="button" aria-label="Редактировать профиль" onClick={handleEdit}>Редактировать</button>
                 <button className={`${isDisabled ? 'profile__button  profile__button_exit' : 'profile__button_hidden'}`} type="button" aria-label="Выход из аккаунта" onClick={handleSignOut} >Выйти из аккаунта</button>
                 <button className={`${isDisabled ? 'profile__button_hidden' : isValid ? 'profile__submit-button' : 'profile__submit-button profile__button_disabled'}`}

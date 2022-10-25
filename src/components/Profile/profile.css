@@ -109,14 +109,27 @@
 .profile__text_visible{
     display: none;
 }
+.profile__error{
+    color: red;
+    font-size: 16px;
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    top: 450px;
+    left: 0;
+}
 @media (max-width: 768px){
+    .profile__error{
+        font-size: 14px;
+        top: 550px;
+    }
     .profile{
         padding-top: 234px;
     }
     .profile__title{
         padding-right: 1px;
     }
-    .profile__input:first-of-type{
+    .profile__content:first-of-type{
         margin-top: 96px;
     }
     .profile__input{
@@ -134,10 +147,14 @@
     }
 }
 @media (max-width: 500px){
+    .profile__error{
+        font-size: 10px;
+        top: 350px;
+    }
     .profile{
         padding-top: 70px;
     }
-    .profile__input:first-of-type{
+    .profile__content:first-of-type{
         margin-top: 80px;
     }
     .profile__input{

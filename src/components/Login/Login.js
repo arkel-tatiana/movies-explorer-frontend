@@ -1,11 +1,10 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import './login.css'
-
 import useForm from "../../utils/UseForm";
 import validate from '../../utils/LoginFormValidationRules';
 
-const Login = ({ onLogin }) => {
+const Login = ({ onLogin, errorMessage}) => {
     const {
         values, 
         handleChange,
@@ -48,7 +47,7 @@ const Login = ({ onLogin }) => {
                     onChange={handleChange} 
                     required />
                 <span className={`${errors.password ? 'login__text login__text_error login__text_errorPassword' : 'login__text_visible'}`}>{errors.password}</span>    
-                <p className="login__text login__text_error login__text_visible">Что-то пошло не так...</p>        
+                <span className={`${errorMessage ? 'login__error' : 'login__text_visible'}`} >{errorMessage}</span>    
                 <button className={`${isValid ? 'login__submit-button' : 'login__submit-button login__submit-button_disabled'}`}
                     disabled={!isValid}
                     type="submit">Войти</button>

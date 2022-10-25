@@ -16,7 +16,6 @@ import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import * as windowWidth from '../../utils/WindowWidth.js'
 import './App.css'
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
-import Error from '../Error/Error';
 import * as constant from '../../utils/Constant'
 
 const App = () => {
@@ -34,7 +33,7 @@ const App = () => {
     const [countPushMovies, setCountPushMovies] = useState('');
     const [disambledButton, setDisambledButton] = useState(false);
     const [errorRegister, setErrorRegister] = useState(false);
-    const [errorTopPozishion, setErrorTopPozishion] = useState('');
+   
     
     let widthScreen = windowWidth.useCurrentWidth();
     let regPassword = '';
@@ -99,7 +98,6 @@ const App = () => {
                 };
             })
             .catch((err) => {
-                setErrorTopPozishion(290);
                 setErrorMessage(constant.errorServer);
                 console.log(`ошибка ${err}`);
             })
@@ -123,7 +121,6 @@ const App = () => {
             }
         })
         .catch((err)=>{ 
-            setErrorTopPozishion(290)
             setErrorMessage(constant.errorServer)
             console.log(`ошибка ${err}`); 
         })
@@ -132,7 +129,6 @@ const App = () => {
     const onRegister = ({ name, email, password }) => {
         regPassword = password;
         setIsLoading(true);
-        setErrorTopPozishion(450);
         return mainApi.register(name, email, password)
         .then((res) => {
             if (res.message) {
@@ -155,7 +151,6 @@ const App = () => {
       
     const onLogin = ({ email, password }) => {
         setIsLoading(true)
-        setErrorTopPozishion(400)
         return mainApi.authorize(email, password)
             .then((res) => {
                 setErrorMessage('')
@@ -178,7 +173,6 @@ const App = () => {
     
     const handleUpdateUser = (formData) => {  //запрос на правку данных 
         setIsLoading(true);
-        setErrorTopPozishion(450)
         mainApi.editUserData(formData)
         .then((res)=>{
             setCurrentUser(res);
@@ -209,7 +203,6 @@ const App = () => {
         localStorage.setItem('movies', JSON.stringify(filterMovies));
         localStorage.setItem('checked', checked);
         localStorage.setItem('text', searchText);
-        setErrorTopPozishion(160);
         filterMovies.length === 0 ? setErrorMessage(constant.errorFound) : setErrorMessage('');
     } 
     const onFoundMovies = (searchText, checked) => {              // поиск фильма
@@ -223,11 +216,10 @@ const App = () => {
                 element.image.url = constant.BASE_URL_image + element.image.url
                 element.image.formats.thumbnail.url = constant.BASE_URL_image + element.image.formats.thumbnail.url
             });
-                searchTextMovie(searchText, checked)
+                searchTextMovie(searchText, checked);
             })
             .catch((err) => {
-                setErrorTopPozishion(160)
-                setErrorMessage(constant.errorServer)
+                setErrorMessage(constant.errorServer);
                 console.log(`ошибка ${err}`);
             })
             .finally(() => {
@@ -238,7 +230,6 @@ const App = () => {
         }
     }
     const onSaveFoundMovies = (searchText, checked) => {    // в сохраненных фильмах
-        setErrorTopPozishion(160)
         const filterMoviesMain = moviesMain.filter(element => 
             (element.nameRU.toLowerCase().includes(searchText.toLowerCase())
             || element.nameEN.toLowerCase().includes(searchText.toLowerCase()))
@@ -269,7 +260,6 @@ const App = () => {
             setFoundMoviesMain((state) => state.filter((c) => c._id !== dataMovie._id ));
         })
         .catch((err) => {
-            setErrorTopPozishion(160);
             setErrorMessage(constant.errorServer);
             console.log(`ошибка ${err}`);
         })
@@ -298,15 +288,14 @@ const App = () => {
   return (
     <div className="page">
         {isLoading ? <Preloader /> : ''}
-        {errorMessage.length !== 0 ? <Error errorMessage={errorMessage} errorTopPozishion={errorTopPozishion}/> : ''}
         <CurrentUserContext.Provider value={currentUser}>
             <Header />
                 <Switch>
                     <Route path="/sign-up">
-                        <Register onRegister={onRegister} errorRegister={errorRegister}/>
+                        <Register onRegister={onRegister} errorRegister={errorRegister} errorMessage={errorMessage}/>
                     </Route>
                     <Route path="/sign-in">
-                        <Login onLogin={onLogin} errorLogin={errorLogin} error={'Введен некорректный email или пароль'}/>
+                        <Login onLogin={onLogin} errorMessage={errorMessage}/>
                     </Route>
                     <Route exact path="/">
                         <Main/>
@@ -323,6 +312,7 @@ const App = () => {
                         onAddFilm={onAddFilm}
                         foundMovies={foundMovies}
                         disambledButton={disambledButton}
+                        errorMessage={errorMessage}
                         component={Movies} />
                     <ProtectedRoute
                         path="/saved-movies"
@@ -333,12 +323,14 @@ const App = () => {
                         moviesMain={moviesMain}
                         onSaveChengeCheckbox={onSaveChengeCheckbox}
                         checked={checked}
+                        errorMessage={errorMessage}
                         component={SavedMovies} />
                     <ProtectedRoute
                         path="/profile"
                         loggedIn={loggedIn}
                         onUpdateUser={handleUpdateUser}
                         onSignOut={signOut}
+                        errorMessage={errorMessage}
                         component={Profile} />    
                     <Route path="*">
                         <PageNotFound/>

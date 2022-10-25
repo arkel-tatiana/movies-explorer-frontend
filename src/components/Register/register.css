@@ -104,7 +104,20 @@
 .register__text_loginEmail{
     top: 280px;
 }
+.register__error{
+    color: red;
+    font-size: 16px;
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    top: 650px;
+    left: 0;
+}
 @media (max-width: 768px){
+    .register__error{
+        font-size: 14px;
+        top: 780px;
+    }
     .register__title, .register__inputs {
         width: 51.56%;
     }
@@ -140,6 +153,10 @@
     }
 }
 @media (max-width: 320px){
+    .register__error{
+        font-size: 10px;
+        top: 580px;
+    }
     .register__title{
         width: 81.25%;
         text-align: center;
