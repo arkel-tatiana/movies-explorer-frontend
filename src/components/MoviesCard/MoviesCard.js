@@ -8,7 +8,6 @@ function MoviesCard({movie, logoButton, onHandleMovie, moviesMain}) {
   function handleMovie() {
       onHandleMovie(movie)
   }
-  console.log(movie) 
     return (
         <li className="moviesCard__content">
           <div className="moviesCard__texts">

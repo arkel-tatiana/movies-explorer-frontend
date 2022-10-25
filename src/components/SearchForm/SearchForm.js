@@ -10,14 +10,14 @@ function SeachForm({onFoundMovies, onChengeCheckbox, checked}) {
 function handleSubmitFound(e) {
       e.preventDefault();
       if (searchText.length === 0) {
-          setSearchError(true)
+          setSearchError(true);
       } else {
-          setSearchError(false)
-          onFoundMovies(searchText, checked)
+          setSearchError(false);
+          onFoundMovies(searchText, checked);
       }
   } 
   function chengeCheckbox() {
-      onChengeCheckbox(searchText)
+      onChengeCheckbox(searchText);
   }
   return (
         <div className="seachForm">
@@ -29,8 +29,6 @@ function handleSubmitFound(e) {
                     onChange={event => setSearchText(event.target.value)}
                     placeholder="Фильм"
                     required
-                    //value={values.email || ''}
-                    value={searchText}
                     >
                 </input>
                 <span className={`${searchError ? 'seachForm__error' : 'seachForm__error_visible'}`}>Нужно ввести ключевое слово</span>

@@ -2,10 +2,10 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import './login.css'
 
-import useForm from "../../utils/useForm";
+import useForm from "../../utils/UseForm";
 import validate from '../../utils/LoginFormValidationRules';
 
-const Login = ({ onLogin, errorLogin, error }) => {
+const Login = ({ onLogin }) => {
     const {
         values, 
         handleChange,

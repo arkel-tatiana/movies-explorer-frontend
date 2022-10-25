@@ -7,10 +7,8 @@ function MoviesCardList({showMovies, logoButton, onHandleMovie, moviesMain, onAd
     function hangleAddFilm(){
         onAddFilm(foundMovies)
     }
-    console.log(disambledButton)
-    console.log(showMovies)
     return (
-        <section className="moviesCardList">
+        <section className='moviesCardList'>
           <ul className="moviesCardList__container">
               {showMovies.map((item, i) => (
                 <MoviesCard
@@ -21,7 +19,7 @@ function MoviesCardList({showMovies, logoButton, onHandleMovie, moviesMain, onAd
                     key={i}/>
               ))}
           </ul>
-        <Switch>
+          <Switch>
             <Route path="/movies">
                 <button
                     className={`${!disambledButton && showMovies.length > 3? 'moviesCardList__button_dop' : 'moviesCardList__button_visible'}`}
@@ -29,7 +27,7 @@ function MoviesCardList({showMovies, logoButton, onHandleMovie, moviesMain, onAd
                     onClick={hangleAddFilm}
                     disabled={disambledButton}>Ещё</button>
             </Route>  
-        </Switch>
+          </Switch>
         </section>
   );
 }

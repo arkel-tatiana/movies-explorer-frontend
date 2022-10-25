@@ -1,5 +1,5 @@
 import headerLogo from '../../images/logoColorMain.svg';
-import React, { useState } from 'react'
+import React from 'react'
 import { Route, Switch, Link } from 'react-router-dom';
 import './header.css'
 import Navigation from '../Navigation/Navigation'

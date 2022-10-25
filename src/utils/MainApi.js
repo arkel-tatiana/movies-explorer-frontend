@@ -1,9 +1,8 @@
-const BASE_URL = 'https://api.arkel.students.nomoredomains.sbs'//'https://api.arkel.students.nomoredomains.sbs'//'http://localhost:3000';
-const BASE_URL_image = 'https://api.nomoreparties.co'
+import * as constant from './Constant'
+
                                 
 export const register = (name, email, password) => {
-    console.log(name, email, password)
-  return fetch(`${BASE_URL}/signup`, {
+  return fetch(`${constant.BASE_URL}/signup`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -16,8 +15,7 @@ export const register = (name, email, password) => {
 };
 
 export const authorize = (email, password) => {
-  return fetch(`${BASE_URL}/signin`, {
-  //  credentials: 'include',
+  return fetch(`${constant.BASE_URL}/signin`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -30,8 +28,7 @@ export const authorize = (email, password) => {
 };
 
 export const checkToken = (token) => {
-    console.log(token)
-    return fetch(`${BASE_URL}/users/me`, {
+    return fetch(`${constant.BASE_URL}/users/me`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -44,7 +41,7 @@ export const checkToken = (token) => {
 }
 
 export const getUserData = () => {
-    return fetch(`${BASE_URL}/users/me`, {
+    return fetch(`${constant.BASE_URL}/users/me`, {
         method: 'GET',    
         headers: {
             authorization: `Bearer ${localStorage.getItem('jwt')}`,//`Bearer ${token}`,
@@ -55,7 +52,7 @@ export const getUserData = () => {
 };
 
 export const  editUserData = (formData) => {
-    return fetch(`${BASE_URL}/users/me`, {
+    return fetch(`${constant.BASE_URL}/users/me`, {
         method: 'PATCH',
         headers: {
             authorization: `Bearer ${localStorage.getItem('jwt')}`,//`Bearer ${token}`,
@@ -69,7 +66,7 @@ export const  editUserData = (formData) => {
     .then(getResponseData)
 }
 export const getSaveMovies = () => {
-    return fetch(`${BASE_URL}/movies`, {
+    return fetch(`${constant.BASE_URL}/movies`, {
         headers: {
             authorization: `Bearer ${localStorage.getItem('jwt')}`,//`Bearer ${token}`,
             'Content-Type': 'application/json'
@@ -79,8 +76,7 @@ export const getSaveMovies = () => {
 }
 
 export const savedMovie = (dataMovie) => {
-    console.log(dataMovie)
-    return fetch(`${BASE_URL}/movies`, {
+    return fetch(`${constant.BASE_URL}/movies`, {
         method: 'POST',
         headers: {
             authorization: `Bearer ${localStorage.getItem('jwt')}`,//`Bearer ${token}`,
@@ -104,7 +100,7 @@ export const savedMovie = (dataMovie) => {
 };
 
 export const deleteMovie = (dataMovie) => {
-    return fetch(`${BASE_URL}/movies/${dataMovie._id}`, {
+    return fetch(`${constant.BASE_URL}/movies/${dataMovie._id}`, {
         method: 'DELETE',
         headers: {
             authorization: `Bearer ${localStorage.getItem('jwt')}`,//`Bearer ${token}`,

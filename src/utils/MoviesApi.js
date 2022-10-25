@@ -1,7 +1,7 @@
+import * as constant from './Constant'
 
-const BASE_URL_BEATFILM = 'https://api.nomoreparties.co/beatfilm-movies'
-export const getMovies = (name, email, password) => {
-    return fetch(`${BASE_URL_BEATFILM}`, {
+export const getMovies = () => {
+    return fetch(`${constant.BASE_URL_BEATFILM}`, {
         headers: {
             'Content-Type': 'application/json'
         },

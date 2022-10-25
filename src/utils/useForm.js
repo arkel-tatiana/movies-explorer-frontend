@@ -23,8 +23,6 @@ export function useForm(callback, validate, priz) {
       },
       [setValues, setErrors, setIsValid]
     );
-    
-  
     return { values, setValues, handleChange, errors, isValid, resetForm};
   }
 

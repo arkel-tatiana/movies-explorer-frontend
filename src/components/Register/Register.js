@@ -1,9 +1,9 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import './register.css'
-import useForm from "../../utils/useForm";
+import useForm from "../../utils/UseForm";
 import validate from '../../utils/LoginFormValidationRules';
-const Register = ({ onRegister }) => {
+const Register = ({ onRegister, errorRegister }) => {
     const {
         values, 
         handleChange,
@@ -23,15 +23,7 @@ const Register = ({ onRegister }) => {
             resetForm()
         };
     }
-   // const handleSubmit = useCallback(
-   //     (newValues = {}, newErrors = {}, newIsValid = false) => {
-   //       setValues(newValues);
-   //       setErrors(newErrors);
-   //       setIsValid(newIsValid);
-   //     },
-   //     [setValues, setErrors, setIsValid]
-   //   );
-
+   
     return (
         <section className="register">
             <form className="register__forma" onSubmit={handleSubmit} noValidate>
@@ -63,7 +55,7 @@ const Register = ({ onRegister }) => {
                 onChange={handleChange} 
                 required />
             <span className={`${errors.password ? 'register__text register__text_error register__text_errorPassword' : 'register__text_visible'}`}>{errors.password}</span>    
-            <p className="register__text register__text_error">Что-то пошло не так...</p>        
+            <p className={`${errorRegister ? 'register__text register__text_error' : 'register__text_visible'}`} >Что-то пошло не так...</p>        
             <button className={`${isValid ? 'register__submit-button' : 'register__submit-button register__submit-button_disabled'}`}
                 disabled={!isValid}
                 type="submit">Зарегистрироваться</button>

@@ -1,5 +1,5 @@
 import './profile.css'
-import useForm from "../../utils/useForm";
+import useForm from "../../utils/UseForm";
 import validate from '../../utils/LoginFormValidationRules';
 import React, { useState } from 'react'
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
