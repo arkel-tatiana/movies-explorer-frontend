@@ -24,7 +24,7 @@ const App = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState('')
     const history = useHistory();
-    const [errorLogin, setErrorLogin] = useState(false);
+    const [moviesYandex, setMoviesYandex] = useState([]);
     const [moviesMain, setMoviesMain] = useState([]);
     const [showMovies, setShowMovies] = useState([]);
     const [foundMovies, setFoundMovies] = useState([]);
@@ -33,11 +33,10 @@ const App = () => {
     const [countPushMovies, setCountPushMovies] = useState('');
     const [disambledButton, setDisambledButton] = useState(false);
     const [errorRegister, setErrorRegister] = useState(false);
-   
+    const [state, setState] = useState(localStorage.getItem('jwt') || false)
     
     let widthScreen = windowWidth.useCurrentWidth();
     let regPassword = '';
-    let moviesYandex = [];
     let localCheked = false
     localStorage.getItem('checked') === "true" ? localCheked=true : localCheked=false;
     const [checked, setChecked] = useState(localCheked);
@@ -48,12 +47,6 @@ const App = () => {
             setStatusToken(jwt);
         }
     }, [loggedIn]);
-    
-    useEffect(() => {
-        if (loggedIn) {
-           history.push('/movies');
-        }
-    }, [loggedIn])
 
     useEffect(() => {
         setFoundMoviesMain(moviesMain);
@@ -87,14 +80,18 @@ const App = () => {
     useEffect(() => {// получили сохраненные фильмы
         if (loggedIn) {
             setIsLoading(true);
-            setErrorMessage('')
+            setErrorMessage('');
             mainApi.getSaveMovies()
             .then((res) => {
                 setMoviesMain(res.filter(i => i.owner.toString() === currentUser._id));
                 const localMovies = JSON.parse(localStorage.getItem('movies'));
+                getMoviesYandex();
                 if (localMovies) {
                     setShowMovies(limitMovies(localMovies));
                     setFoundMovies(localMovies);
+                } else {
+                    setShowMovies([]);
+                    setFoundMovies([]);
                 };
             })
             .catch((err) => {
@@ -110,9 +107,9 @@ const App = () => {
     
 
     const setStatusToken = (jwt) => {
+        setErrorMessage('')
         mainApi.checkToken(jwt)
         .then((res) => {
-            setErrorMessage('')
             if (res) {
                 setLoggedIn(true);
                 setCurrentUser(res)
@@ -127,6 +124,7 @@ const App = () => {
     }
     
     const onRegister = ({ name, email, password }) => {
+        setErrorMessage('');
         regPassword = password;
         setIsLoading(true);
         return mainApi.register(name, email, password)
@@ -135,7 +133,6 @@ const App = () => {
                 setErrorMessage(constant.errorUnique);
                 history.push('/sign-up');
             } else {
-                setErrorMessage('');
                 onLogin({ email: res.email, password: regPassword});
             }
         })
@@ -150,10 +147,10 @@ const App = () => {
     }
       
     const onLogin = ({ email, password }) => {
+        setErrorMessage('')
         setIsLoading(true)
         return mainApi.authorize(email, password)
             .then((res) => {
-                setErrorMessage('')
                 if (res.token) {
                     localStorage.setItem('jwt', res.token);
                     setLoggedIn(true);
@@ -179,7 +176,7 @@ const App = () => {
         })
         .catch((err)=>{ 
             err === 'Ошибка: 409' ? setErrorMessage(constant.errorUnique) : setErrorMessage(constant.errorServer);
-            console.log(`ошибка ${err}`); ; 
+            console.log(`ошибка ${err}`); 
         })
         .finally(() => {
             setIsLoading(false)
@@ -190,50 +187,51 @@ const App = () => {
         localStorage.removeItem('movies');
         localStorage.removeItem('checked');
         localStorage.removeItem('text');
+
         setLoggedIn(false);
-        history.push('/sign-in');
+        history.push('/');
     }
-    const searchTextMovie = (searchText, checked) => {
+    
+    const getMoviesYandex = (searchText, checked) => { 
+        setIsLoading(true); 
+        moviesApi.getMovies()
+        .then((res) => {
+            setErrorMessage('')
+            res.forEach(element => {
+               element.image.url = constant.BASE_URL_image + element.image.url
+               element.image.formats.thumbnail.url = constant.BASE_URL_image + element.image.formats.thumbnail.url
+            });
+            return res
+        })
+        .then((res) => {
+            setMoviesYandex(res)
+        })
+        .catch((err) => {
+            setErrorMessage(constant.errorServer);
+            console.log(`ошибка ${err}`);
+        })
+        .finally(() => {
+            setIsLoading(false)
+        })
+    };
+
+    const onFoundMovies = (searchText, checked) => {    
         const filterMovies = moviesYandex.filter(element => 
             (element.nameRU.toLowerCase().includes(searchText.toLowerCase())
             || element.nameEN.toLowerCase().includes(searchText.toLowerCase()))
-            & (checked ? element.duration<40 : element.duration>0))
+            & (checked ? element.duration<constant.timing : element.duration>0))
         setFoundMovies (filterMovies);
         setShowMovies(limitMovies(filterMovies))
         localStorage.setItem('movies', JSON.stringify(filterMovies));
         localStorage.setItem('checked', checked);
         localStorage.setItem('text', searchText);
         filterMovies.length === 0 ? setErrorMessage(constant.errorFound) : setErrorMessage('');
-    } 
-    const onFoundMovies = (searchText, checked) => {              // поиск фильма
-        if (moviesYandex.length === 0) {
-            setIsLoading(true); 
-            moviesApi.getMovies()
-            .then((res) => {
-                setErrorMessage('')
-                moviesYandex = res;
-                moviesYandex.forEach(element => {
-                element.image.url = constant.BASE_URL_image + element.image.url
-                element.image.formats.thumbnail.url = constant.BASE_URL_image + element.image.formats.thumbnail.url
-            });
-                searchTextMovie(searchText, checked);
-            })
-            .catch((err) => {
-                setErrorMessage(constant.errorServer);
-                console.log(`ошибка ${err}`);
-            })
-            .finally(() => {
-                setIsLoading(false)
-            })
-        } else {
-            searchTextMovie(searchText, checked)
-        }
     }
     const onSaveFoundMovies = (searchText, checked) => {    // в сохраненных фильмах
         const filterMoviesMain = moviesMain.filter(element => 
             (element.nameRU.toLowerCase().includes(searchText.toLowerCase())
             || element.nameEN.toLowerCase().includes(searchText.toLowerCase()))
-            & (checked ? element.duration<40 : element.duration>0));
+            & (checked ? element.duration<constant.timing : element.duration>0));
         setFoundMoviesMain(filterMoviesMain);
         filterMoviesMain.length === 0 ? setErrorMessage(constant.errorFound) : setErrorMessage('');
     }
@@ -289,19 +287,29 @@ const App = () => {
     <div className="page">
         {isLoading ? <Preloader /> : ''}
         <CurrentUserContext.Provider value={currentUser}>
-            <Header />
+            <Header loggedIn={loggedIn} setErrorMessage={setErrorMessage}/>
                 <Switch>
                     <Route path="/sign-up">
-                        <Register onRegister={onRegister} errorRegister={errorRegister} errorMessage={errorMessage}/>
+                        <Register
+                            onRegister={onRegister}
+                            errorRegister={errorRegister}
+                            errorMessage={errorMessage}
+                            setErrorMessage={setErrorMessage}
+                            isLoading={isLoading}/>
                     </Route>
                     <Route path="/sign-in">
-                        <Login onLogin={onLogin} errorMessage={errorMessage}/>
+                        <Login 
+                            onLogin={onLogin}
+                            errorMessage={errorMessage}
+                            setErrorMessage={setErrorMessage}
+                            isLoading={isLoading}/>
                     </Route>
                     <Route exact path="/">
                         <Main/>
                     </Route>
                     <ProtectedRoute
                         path="/movies"
+                        state={state}
                         loggedIn={loggedIn}
                         onFoundMovies={onFoundMovies}
                         showMovies={showMovies}
@@ -313,9 +321,12 @@ const App = () => {
                         foundMovies={foundMovies}
                         disambledButton={disambledButton}
                         errorMessage={errorMessage}
+                        onDeleteMovie={onDeleteMovie}
+                        isLoading={isLoading}
                         component={Movies} />
                     <ProtectedRoute
                         path="/saved-movies"
+                        state={state}
                         loggedIn={loggedIn}
                         onSaveFoundMovies={onSaveFoundMovies}
                         foundMoviesMain={foundMoviesMain}
@@ -324,13 +335,17 @@ const App = () => {
                         onSaveChengeCheckbox={onSaveChengeCheckbox}
                         checked={checked}
                         errorMessage={errorMessage}
+                        isLoading={isLoading}
                         component={SavedMovies} />
                     <ProtectedRoute
                         path="/profile"
+                        state={state}
                         loggedIn={loggedIn}
                         onUpdateUser={handleUpdateUser}
                         onSignOut={signOut}
                         errorMessage={errorMessage}
+                        setErrorMessage={setErrorMessage}
+                        isLoading={isLoading}
                         component={Profile} />    
                     <Route path="*">
                         <PageNotFound/>

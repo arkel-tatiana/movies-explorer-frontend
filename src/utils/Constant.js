@@ -13,6 +13,7 @@ export const mobile = {
     count: 5,
     dopCount: 5,
     width: 320};
+export const timing = 40;
 export const errorServer = "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер не доступен. Подождите немного и попробуйте еще раз";
 export const errorValid = "Переданы некорректные данные";
 export const errorAuth = "Ошибка авторизации. Переданы неправильные данные Email либо пароль";

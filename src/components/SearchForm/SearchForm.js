@@ -1,37 +1,37 @@
 import './searchForm.css'
 import logoFind from '../../images/logoFind.svg';
-import React, { useState } from 'react'
-function SeachForm({onFoundMovies, onChengeCheckbox, checked}) {
-  const [searchText, setSearchText] = useState(localStorage.getItem('text'));
-  const [searchError, setSearchError] = useState(false);
- // const [checked, setChecked] = useState(false);
-  
+import { useForm } from 'react-hook-form';
+import React from 'react'
+function SeachForm({onFoundMovies, onChengeCheckbox, checked, isLoading }) {
+    let searchTextLocal = ""
+    localStorage.getItem('text') ? searchTextLocal = localStorage.getItem('text') : searchTextLocal = "";
+    
+    const {
+        register,
+        formState: { errors },
+        handleSubmit,
+    } = useForm({mode: "onSubmit", defaultValues: { searchText: searchTextLocal }});
+   
+    const onSubmit = (data) => {
+        onFoundMovies(data.searchText, checked);
+    }
 
-function handleSubmitFound(e) {
-      e.preventDefault();
-      if (searchText.length === 0) {
-          setSearchError(true);
-      } else {
-          setSearchError(false);
-          onFoundMovies(searchText, checked);
-      }
-  } 
-  function chengeCheckbox() {
-      onChengeCheckbox(searchText);
-  }
+    function chengeCheckbox() {
+        onChengeCheckbox(searchTextLocal);
+    }
   return (
         <div className="seachForm">
-            <form className="seachForm__content" onSubmit={handleSubmitFound} noValidate>
+            <form className="seachForm__content" onSubmit={handleSubmit(onSubmit)} >
                 <input className="seachForm__input"
-                    id="found-film"
-                    name="foundFilm"
-                    type="text"
-                    onChange={event => setSearchText(event.target.value)}
-                    placeholder="Фильм"
-                    required
-                    >
+                    {...register("searchText", {
+                       required: "Нужно ввести ключевое слово"
+                    })}
+                disabled={isLoading}
+                type="text"
+                placeholder="Фильм"
+                >
                 </input>
-                <span className={`${searchError ? 'seachForm__error' : 'seachForm__error_visible'}`}>Нужно ввести ключевое слово</span>
+                {errors?.searchText && <span className="seachForm__error">{errors.searchText.message}</span>}
                 <button className="seachForm__button" type="submit" aria-label="Поиск фильма" >
                     <img className="seachForm__logo" alt="Логотип поиска" src={logoFind}/>
                 </button>

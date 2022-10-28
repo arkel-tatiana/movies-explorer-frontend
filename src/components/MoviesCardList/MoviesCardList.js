@@ -3,7 +3,7 @@ import React from 'react';
 import MoviesCard from '../MoviesCard/MoviesCard';
 import { Route, Switch} from 'react-router-dom';
 
-function MoviesCardList({showMovies, logoButton, onHandleMovie, moviesMain, onAddFilm, foundMovies, disambledButton}) {
+function MoviesCardList({showMovies, logoButton, onSaveMovie, moviesMain, onAddFilm, foundMovies, disambledButton, onDeleteMovie}) {
     function hangleAddFilm(){
         onAddFilm(foundMovies)
     }
@@ -14,8 +14,9 @@ function MoviesCardList({showMovies, logoButton, onHandleMovie, moviesMain, onAd
                 <MoviesCard
                     movie={item}
                     logoButton={logoButton}
-                    onHandleMovie={onHandleMovie}
+                    onSaveMovie={onSaveMovie}
                     moviesMain={moviesMain}
+                    onDeleteMovie={onDeleteMovie}
                     key={i}/>
               ))}
           </ul>

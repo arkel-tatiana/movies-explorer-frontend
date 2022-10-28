@@ -1,12 +1,16 @@
 import './moviesCard.css';
 import React from 'react';
-function MoviesCard({movie, logoButton, onHandleMovie, moviesMain}) {
+function MoviesCard({movie, logoButton, onSaveMovie, moviesMain, onDeleteMovie}) {
   let isSaved = true
   if (movie.id) {
       isSaved = moviesMain.some(i => i.movieId === movie.id);
   }
   function handleMovie() {
-      onHandleMovie(movie)
+    if (movie.id) {
+        moviesMain.some(i => i.movieId === movie.id) ? onDeleteMovie(moviesMain.find(i => i.movieId === movie.id)) : onSaveMovie(movie)
+    } else {
+      onDeleteMovie(movie)
+    }
   }
     return (
         <li className="moviesCard__content">

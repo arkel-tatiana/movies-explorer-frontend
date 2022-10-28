@@ -91,6 +91,10 @@
     margin: 223px calc((100% - 410px)/2) 0 calc((100% - 410px)/2);
     border: none;
 }
+.profile__submit-button:disabled{
+    background: #F8F8F8;
+    color:  #C2C2C2;
+}
 .profile__text_errorName{
     position: absolute;
     left: 36%;
