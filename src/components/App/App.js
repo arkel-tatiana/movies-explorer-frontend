@@ -8,7 +8,7 @@ import PageNotFound from '../PageNotFound/PageNotFound'
 import Preloader from '../Preloader/Preloader';
 import * as moviesApi from '../../utils/MoviesApi.js';
 import React, { useState, useEffect } from 'react'
-import { Route, Switch,  useHistory } from 'react-router-dom';
+import { Route, Switch,  useHistory, useLocation } from 'react-router-dom';
 import Login from '../Login/Login';
 import Register from '../Register/Register';
 import * as mainApi from '../../utils/MainApi.js';
@@ -40,7 +40,11 @@ const App = () => {
     let localCheked = false
     localStorage.getItem('checked') === "true" ? localCheked=true : localCheked=false;
     const [checked, setChecked] = useState(localCheked);
-        
+    const location = useLocation();
+    
+    useEffect(() => {
+        setErrorMessage('')
+    }, [location.pathname])
     useEffect(() => {
         const jwt = localStorage.getItem('jwt');
         if (jwt) {
