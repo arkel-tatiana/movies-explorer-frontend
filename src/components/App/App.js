@@ -37,25 +37,40 @@ const App = () => {
     
     let widthScreen = windowWidth.useCurrentWidth();
     let regPassword = '';
-    let localCheked = false
-    localStorage.getItem('checked') === "true" ? localCheked=true : localCheked=false;
-    const [checked, setChecked] = useState(localCheked);
+    let localChecked = false;
+    let localCheckedSave = false;
+    localStorage.getItem('checked') === "true" ? localChecked=true : localChecked=false;
+    localStorage.getItem('checkedSave') === "true" ? localCheckedSave=true : localCheckedSave=false;
+    const [checked, setChecked] = useState(localChecked);
+    const [checkedSave, setCheckedSave] = useState(localCheckedSave);
+    if (localStorage.getItem('checkedSave')) {
+        if (localStorage.getItem('checkedSave') === "true") {
+            localCheckedSave=true
+        }
+    }
     const location = useLocation();
-    
     useEffect(() => {
         setErrorMessage('')
     }, [location.pathname])
+   
     useEffect(() => {
         const jwt = localStorage.getItem('jwt');
         if (jwt) {
             setStatusToken(jwt);
         }
-    }, [loggedIn]);
+    }, [localStorage.getItem('jwt')]);
 
     useEffect(() => {
         setFoundMoviesMain(moviesMain);
     }, [moviesMain])
-
+    
+    useEffect(() => {
+        if (loggedIn) {
+            if (location.pathname === "/sign-in" || location.pathname === "/sign-up") {
+                history.push('/');
+            }
+        }
+      }, [loggedIn])
        
     useEffect(() => {
         if (foundMovies.length === showMovies.length ||
@@ -89,6 +104,10 @@ const App = () => {
             .then((res) => {
                 setMoviesMain(res.filter(i => i.owner.toString() === currentUser._id));
                 const localMovies = JSON.parse(localStorage.getItem('movies'));
+                const localMoviesMain = JSON.parse(localStorage.getItem('moviesMain'));
+                if (localMoviesMain) {
+                    setFoundMoviesMain(localMoviesMain)
+                }
                 getMoviesYandex();
                 if (localMovies) {
                     setShowMovies(limitMovies(localMovies));
@@ -115,10 +134,18 @@ const App = () => {
         mainApi.checkToken(jwt)
         .then((res) => {
             if (res) {
+                setCurrentUser(res);
                 setLoggedIn(true);
-                setCurrentUser(res)
             } else {
                 setLoggedIn(false);
+                localStorage.removeItem('jwt');
+                localStorage.removeItem('movies');
+                localStorage.removeItem('moviesMain');
+                localStorage.removeItem('checked');
+                localStorage.removeItem('checkedSave');
+                localStorage.removeItem('text');
+                localStorage.removeItem('textSave');
+                setMoviesMain([])
             }
         })
         .catch((err)=>{ 
@@ -157,7 +184,8 @@ const App = () => {
             .then((res) => {
                 if (res.token) {
                     localStorage.setItem('jwt', res.token);
-                    setLoggedIn(true);
+                    setChecked(false);
+                    setCheckedSave(false);
                     history.push('/movies');
                 } else {
                     setErrorMessage(constant.errorAuth)
@@ -186,17 +214,8 @@ const App = () => {
             setIsLoading(false)
         })
       }; 
-    const signOut = () => {                  //выход из аккаунта
-        localStorage.removeItem('jwt');
-        localStorage.removeItem('movies');
-        localStorage.removeItem('checked');
-        localStorage.removeItem('text');
-
-        setLoggedIn(false);
-        history.push('/');
-    }
-    
-    const getMoviesYandex = (searchText, checked) => { 
+        
+    const getMoviesYandex = () => { 
         setIsLoading(true); 
         moviesApi.getMovies()
         .then((res) => {
@@ -231,14 +250,32 @@ const App = () => {
         localStorage.setItem('text', searchText);
         filterMovies.length === 0 ? setErrorMessage(constant.errorFound) : setErrorMessage('');
     }
-    const onSaveFoundMovies = (searchText, checked) => {    // в сохраненных фильмах
+
+    const onSaveFoundMovies = (searchTextSave, checkedSave) => {    // в сохраненных фильмах
         const filterMoviesMain = moviesMain.filter(element => 
-            (element.nameRU.toLowerCase().includes(searchText.toLowerCase())
-            || element.nameEN.toLowerCase().includes(searchText.toLowerCase()))
-            & (checked ? element.duration<constant.timing : element.duration>0));
+            (element.nameRU.toLowerCase().includes(searchTextSave.toLowerCase())
+            || element.nameEN.toLowerCase().includes(searchTextSave.toLowerCase()))
+            & (checkedSave ? element.duration<constant.timing : element.duration>0));
         setFoundMoviesMain(filterMoviesMain);
+        localStorage.setItem('checkedSave', checkedSave);
+        localStorage.setItem('textSave', searchTextSave);
+        localStorage.setItem('moviesMain', JSON.stringify(filterMoviesMain));
         filterMoviesMain.length === 0 ? setErrorMessage(constant.errorFound) : setErrorMessage('');
     }
+
+    const signOut = () => {                  //выход из аккаунта
+        localStorage.removeItem('jwt');
+        localStorage.removeItem('movies');
+        localStorage.removeItem('moviesMain');
+        localStorage.removeItem('checked');
+        localStorage.removeItem('checkedSave');
+        localStorage.removeItem('text');
+        localStorage.removeItem('textSave');
+        setMoviesMain([])
+        setLoggedIn(false);
+        history.push('/');
+    }
+
     const onSaveMovie = (dataMovie) => {
         setIsLoading(true)
         mainApi.savedMovie(dataMovie)
@@ -273,9 +310,9 @@ const App = () => {
         setChecked(!checked);
         onFoundMovies (searchText, !checked);
     }
-    const onSaveChengeCheckbox = (searchText) => {
-        setChecked(!checked);
-        onSaveFoundMovies (searchText, !checked);
+    const onSaveChengeCheckbox = (searchTextSave) => {
+        setCheckedSave(!checkedSave);
+        onSaveFoundMovies (searchTextSave, !checkedSave);
     }
     const limitMovies = (moviesAll) => {
         return moviesAll.slice(0, countMovies);
@@ -337,7 +374,7 @@ const App = () => {
                         onDeleteMovie={onDeleteMovie}
                         moviesMain={moviesMain}
                         onSaveChengeCheckbox={onSaveChengeCheckbox}
-                        checked={checked}
+                        checkedSave={checkedSave}
                         errorMessage={errorMessage}
                         isLoading={isLoading}
                         component={SavedMovies} />

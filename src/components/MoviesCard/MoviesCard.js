@@ -1,6 +1,6 @@
 import './moviesCard.css';
 import React from 'react';
-function MoviesCard({movie, logoButton, onSaveMovie, moviesMain, onDeleteMovie}) {
+function MoviesCard({movie, logoButton, onSaveMovie, moviesMain, onDeleteMovie, isLoading}) {
   let isSaved = true
   if (movie.id) {
       isSaved = moviesMain.some(i => i.movieId === movie.id);
@@ -22,9 +22,10 @@ function MoviesCard({movie, logoButton, onSaveMovie, moviesMain, onDeleteMovie})
             target="_blank" rel="noreferrer">
             <img className="moviesCard__image" alt="тест картинки" src={!movie.image.url ? movie.image : movie.image.url}/>
           </a>
-          <button className="moviesCard__button  " type="button" aria-label="Сохранить фильм" onClick={handleMovie} >
+          <button className="moviesCard__button  " type="button" aria-label="Сохранить фильм" onClick={handleMovie} disabled={isLoading}>
             <p className={`${!isSaved ? 'moviesCard__button_text' : 'moviesCard__button_noactive'}`}>Сохранить</p>
-            <img className={`${isSaved ? 'moviesCard__button_active' : 'moviesCard__button_noactive'}`} alt="лого фильм сохранён" src={logoButton}/></button>
+            <img className={`${isSaved ? 'moviesCard__button_active' : 'moviesCard__button_noactive'}`} alt="лого фильм сохранён" src={logoButton}/>
+          </button>
         </li>
     );
 }

@@ -2,9 +2,14 @@ import './searchForm.css'
 import logoFind from '../../images/logoFind.svg';
 import { useForm } from 'react-hook-form';
 import React from 'react'
-function SeachForm({onFoundMovies, onChengeCheckbox, checked, isLoading }) {
+function SeachForm({onFoundMovies, onChengeCheckbox, checked, isLoading, isSaved }) {
+    console.log(checked)
     let searchTextLocal = ""
-    localStorage.getItem('text') ? searchTextLocal = localStorage.getItem('text') : searchTextLocal = "";
+    if (isSaved) {
+        localStorage.getItem('textSave') ? searchTextLocal = localStorage.getItem('textSave') : searchTextLocal = "";
+    } else {    
+        localStorage.getItem('text') ? searchTextLocal = localStorage.getItem('text') : searchTextLocal = "";
+    }
     
     const {
         register,
@@ -32,7 +37,7 @@ function SeachForm({onFoundMovies, onChengeCheckbox, checked, isLoading }) {
                 >
                 </input>
                 {errors?.searchText && <span className="seachForm__error">{errors.searchText.message}</span>}
-                <button className="seachForm__button" type="submit" aria-label="Поиск фильма" >
+                <button className="seachForm__button" type="submit" aria-label="Поиск фильма" disabled={isLoading}>
                     <img className="seachForm__logo" alt="Логотип поиска" src={logoFind}/>
                 </button>
             </form>

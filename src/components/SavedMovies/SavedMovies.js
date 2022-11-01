@@ -13,14 +13,15 @@ function SavedMovies({
     onDeleteMovie,
     moviesMain,
     onSaveChengeCheckbox,
-    checked,
+    checkedSave,
     errorMessage,
     isLoading}) {
+    console.log(checkedSave)
     return (
         <div className="savedMovies">
-            <SeachForm onFoundMovies={onSaveFoundMovies} onChengeCheckbox={onSaveChengeCheckbox} checked={checked} isLoading={isLoading}/>
+            <SeachForm onFoundMovies={onSaveFoundMovies} onChengeCheckbox={onSaveChengeCheckbox} checked={checkedSave} isLoading={isLoading} isSaved={true}/>
             <MoviesCardList showMovies={foundMoviesMain} logoButton={logoDeleteMovie}
-                onDeleteMovie={onDeleteMovie} moviesMain={moviesMain}/>
+                onDeleteMovie={onDeleteMovie} moviesMain={moviesMain} isLoading={isLoading}/>
             <span className={`${errorMessage ? 'savedMovies__error' : 'savedMovies__error_visible'}`} >{errorMessage}</span>
         </div>
     );

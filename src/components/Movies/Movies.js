@@ -27,7 +27,8 @@ function Movies({
               onFoundMovies={onFoundMovies}
               onChengeCheckbox={onChengeCheckbox}
               checked={checked}
-              isLoading={isLoading} />
+              isLoading={isLoading}
+              isSaved={false} />
           <MoviesCardList
               showMovies={showMovies}
               logoButton={logoMovies}
@@ -36,7 +37,8 @@ function Movies({
               onAddFilm={onAddFilm}
               foundMovies={foundMovies}
               disambledButton={disambledButton}
-              onDeleteMovie={onDeleteMovie} />
+              onDeleteMovie={onDeleteMovie} 
+              isLoading={isLoading} />
           <span className={`${errorMessage ? 'movies__error' : 'movies__error_visible'}`} >{errorMessage}</span>
         </div>
     );
