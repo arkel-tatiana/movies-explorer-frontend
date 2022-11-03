@@ -93,8 +93,21 @@
 .login__inputs_color{
     color:#FF4062
 }
+.login__error{
+    color: red;
+    font-size: 16px;
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    top: 400px;
+    left: 0;
+}
 
 @media (max-width: 768px){
+    .login__error{
+        font-size: 14px;
+        top: 580px;
+    }
     .login__title, .login__inputs {
         width: 51.56%;
     }
@@ -120,6 +133,10 @@
     }
 }
 @media (max-width: 320px){
+    .login__error{
+        font-size: 10px;
+        top: 450px;
+    }
     .login__title{
         width: 81.25%;
         text-align: center;

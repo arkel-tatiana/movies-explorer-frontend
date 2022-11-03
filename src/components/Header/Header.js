@@ -1,21 +1,21 @@
 import headerLogo from '../../images/logoColorMain.svg';
-import React, { useState } from 'react'
+import React from 'react'
 import { Route, Switch, Link } from 'react-router-dom';
 import './header.css'
 import Navigation from '../Navigation/Navigation'
-function Header() {
+function Header({loggedIn, setErrorMessage}) {
   return (
             <Switch>
               <Route path={["/movies", "/saved-movies", "/profile"]}>
                 <header className="header">
                   <Link className="header__logo" style={{ backgroundImage: `url(${headerLogo})` }} to="/"></Link>
-                  <Navigation />
+                  <Navigation loggedIn={loggedIn} setErrorMessage={setErrorMessage}/>
                 </header>
               </Route>
               <Route exact path="/">
                 <header className="header header_color">
                   <Link className="header__logo" style={{ backgroundImage: `url(${headerLogo})` }} to="/"></Link>
-                  <Navigation />
+                  <Navigation loggedIn={loggedIn} setErrorMessage={setErrorMessage}/>
                 </header>
               </Route>
               <Route path={["/sign-in", "/sign-up"]}>

@@ -36,6 +36,9 @@
 .moviesCardList__button_dop:hover{
     opacity: 0.5;
 }
+.moviesCardList__button_visible{
+    display: none;
+}
 @media (max-width: 1100px){
     .moviesCardList__container{
         width: 92.19%;
